@@ -4,10 +4,25 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Aluno {
 	private List<Double> notas = new ArrayList<>();
-	private int quantidadeFaltas;
+	private int faltas;
+	private int aulaMinistradas;
+	private String nome;
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public void setNotas(List<Double> notas) {
+		this.notas = notas;
+	}
 
 	public void adicionarNota(Double nota) {
 		notas.add(nota);
@@ -17,12 +32,20 @@ public class Aluno {
 		return notas;
 	}
 
-	public int getQuantidadeFaltas() {
-		return quantidadeFaltas;
+	public int getFaltas() {
+		return faltas;
 	}
 
-	public void setQuantidadeFaltas(int quantidadeFaltas) {
-		this.quantidadeFaltas = quantidadeFaltas;
+	public void setFaltas(int faltas) {
+		this.faltas = faltas;
+	}
+
+	public int getAulaMinistradas() {
+		return aulaMinistradas;
+	}
+
+	public void setAulaMinistradas(int aulaMinistradas) {
+		this.aulaMinistradas = aulaMinistradas;
 	}
 
 	public String verificarAprovacao() {
@@ -31,39 +54,30 @@ public class Aluno {
 			System.out.println("Faltas validadas");
 			if (verificarSituacaoAluno()) {
 				situacaoAluno = "aprovado";
-				System.out.println("Aluno aprovado");
 			}
-			if(! verificarSituacaoAluno()) {
-				System.out.println("Aluno reprovado");
-			}
+
 		} else {
 			System.out.println("Notas inválidas!");
 		}
+		System.out.println("aluno " + situacaoAluno);
 		return situacaoAluno;
 	}
 
 	public boolean verificarSituacaoAluno() {
-		Calendar calendar = new GregorianCalendar();
-		int diasMes = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
 		boolean situacao = false;
-		if (validarQuantidadeFaltas()) {
-			
-			int porcentagemFaltas = (quantidadeFaltas * 100) / diasMes;
-			if (porcentagemFaltas <= 75.0 && calculaMedia() >= 8.0) {
-				
-				situacao = true;
-			}
-		} else {
-			System.out.println("Data inválida");
+		double presenca = calcularPresenca();
+		double media = calculaMedia();
+		System.out.println("porcentagem de presença do aluno: " + this.nome +", " + presenca+" %");
+		if (presenca >= 75 && media >= 8.0) {
+			situacao = true;
 		}
 		return situacao;
 	}
 
-	// verifica se o aluno tem nenhuma ou faltou o mes inteiro.
-	public boolean validarQuantidadeFaltas() {
-		Calendar calendar = new GregorianCalendar();
-		int diasMes = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-		return (quantidadeFaltas >= 0 && quantidadeFaltas <= diasMes ? true : false);
+	// calcula a presenca do aluno
+	private double calcularPresenca() {
+		int frequencia = this.aulaMinistradas - this.faltas;
+		return (frequencia * 100) / this.aulaMinistradas;
 	}
 
 	// verifica se cada nota é maior ou igual a zero e menor ou igual a 10.
@@ -82,10 +96,9 @@ public class Aluno {
 	// calcula a media do aluno com base na quantidade de notas.
 	public Double calculaMedia() {
 		Double media = 0.0;
-		int quantidadeNotas = notas.size();
 		for (Double n : notas) {
 			media += n;
 		}
-		return media / quantidadeNotas;
+		return media / notas.size();
 	}
 }
