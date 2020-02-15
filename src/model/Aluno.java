@@ -1,5 +1,6 @@
 package model;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -67,11 +68,19 @@ public class Aluno {
 		boolean situacao = false;
 		double presenca = calcularPresenca();
 		double media = calculaMedia();
-		System.out.println("porcentagem de presença do aluno: " + this.nome +", " + presenca+" %");
-		if (presenca >= 75 && media >= 8.0) {
-			situacao = true;
+		System.out.println("porcentagem de presença do aluno: " + this.nome + ", " + presenca + " %");
+		if (presenca >= 75 && validarMedia(media)) {
+			if (media >= 8.0) {
+				situacao = true;
+
+			}
 		}
 		return situacao;
+	}
+
+	// verifica se a media e maior que 0 e menor que 10.
+	public boolean validarMedia(double media) {
+		return (media >= 0 && media <= 10 ? true : false);
 	}
 
 	// calcula a presenca do aluno
@@ -99,6 +108,7 @@ public class Aluno {
 		for (Double n : notas) {
 			media += n;
 		}
+		System.out.printf("Média: %.2f\n",media/notas.size());
 		return media / notas.size();
 	}
 }
