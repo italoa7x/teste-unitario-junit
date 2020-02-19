@@ -29,11 +29,11 @@ public class TestAprovacaoAluno {
 	public void testarAprovacaoAluno2() {
 		aluno2 = new Aluno();
 		aluno2.setNome("maria");
-		aluno2.setFaltas(20);
-		aluno2.setAulaMinistradas(30);
-		aluno2.adicionarNota(5.5);
-		aluno2.adicionarNota(4.5);
-		aluno2.adicionarNota(4.5);
+		aluno2.setFaltas(10);
+		aluno2.setAulaMinistradas(60);
+		aluno2.adicionarNota(9.0);
+		aluno2.adicionarNota(6.0);
+		aluno2.adicionarNota(6.0);
 		
 		assertEquals("reprovado", aluno2.verificarAprovacao());
 		

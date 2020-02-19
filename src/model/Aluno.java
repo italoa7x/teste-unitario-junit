@@ -57,8 +57,6 @@ public class Aluno {
 				situacaoAluno = "aprovado";
 			}
 
-		} else {
-			System.out.println("Notas inválidas!");
 		}
 		System.out.println("aluno " + situacaoAluno);
 		return situacaoAluno;
@@ -68,11 +66,10 @@ public class Aluno {
 		boolean situacao = false;
 		double presenca = calcularPresenca();
 		double media = calculaMedia();
-		System.out.println("porcentagem de presença do aluno: " + this.nome + ", " + presenca + " %");
+		System.out.println("porcentagem de presenca do aluno: " + this.nome + ", " + presenca + " %");
 		if (presenca >= 75 && validarMedia(media)) {
-			if (media >= 8.0) {
+			if (media >= 8.0 && media <= 10.0) {
 				situacao = true;
-
 			}
 		}
 		return situacao;
@@ -80,7 +77,7 @@ public class Aluno {
 
 	// verifica se a media e maior que 0 e menor que 10.
 	public boolean validarMedia(double media) {
-		return (media >= 0 && media <= 10 ? true : false);
+		return (media >= 0 && media <= 10.0 ? true : false);
 	}
 
 	// calcula a presenca do aluno
@@ -89,11 +86,11 @@ public class Aluno {
 		return (frequencia * 100) / this.aulaMinistradas;
 	}
 
-	// verifica se cada nota é maior ou igual a zero e menor ou igual a 10.
+	// verifica se cada nota ï¿½ maior ou igual a zero e menor ou igual a 10.
 	public boolean validaValoresNotas() {
 		boolean validas = false;
 		for (Double n : this.notas) {
-			if (n >= 0 && n <= 10) {
+			if (n >= 0 && n <= 100) {
 				validas = true;
 			} else {
 				validas = false;
@@ -108,7 +105,8 @@ public class Aluno {
 		for (Double n : notas) {
 			media += n;
 		}
-		System.out.printf("Média: %.2f\n",media/notas.size());
-		return media / notas.size();
+		media = media / notas.size();
+		System.out.printf("Media: %.2f\n", media);
+		return media;
 	}
 }
