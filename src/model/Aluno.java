@@ -12,6 +12,17 @@ public class Aluno {
 	private int faltas;
 	private int aulaMinistradas;
 	private String nome;
+	private List<Livro> meusLivros = new ArrayList<Livro>();
+	
+	
+
+	public List<Livro> getMeusLivros() {
+		return meusLivros;
+	}
+
+	public void addLivro(Livro livro) {
+		this.meusLivros.add(livro);
+	}
 
 	public String getNome() {
 		return nome;
